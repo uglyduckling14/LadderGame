@@ -1,0 +1,12 @@
+LadderGame:
+    public readDictionary{
+        //already read
+        //Needs to sort words by length row x col = length of word x longest word-n
+        ArrayList allWords; //arraylist of all the words
+        int longestWord; // longest word
+        ArrayList<String> lengthSort = [][longestword];
+        for allWords{
+            lengthSort[word.length -2].add(word);
+        }
+
+    }
