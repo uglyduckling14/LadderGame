@@ -1,15 +1,12 @@
-public class Queue<E>  implements Comparable<E> {
-    E value = (E) new WordInfo("word",5);
+public class Queue<E> {
+    Queue<E> queue = new Queue<>();
     public void enqueque(E value){
-
+        queue.
     }
-//    public E dequeue(){
-//
-//    }
+    public E dequeue(){
+        return value;
+    }
     public boolean isEmpty(){
         return true;
-    }
-    public int compareTo(E value){
-        return 0;
     }
 }

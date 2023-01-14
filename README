@@ -10,3 +10,46 @@ LadderGame:
         }
 
     }
+    public listWords(int howMany, int length){
+        for i<howMany{
+            System.out.println(readDictionary.lengthSort[length][i]);
+        }
+    }
+    public ArrayList<String> oneAway(String word, boolean withRemoval){
+        ArrayList<String> returnedList
+        for i< readDictionary.lengthSort[word.length].length{ // row of word length
+            if dif(word, dictWord){
+                add to returnedList
+                if withRemoval{
+                    remove dictWord from dictionary
+                }
+            }
+        }
+    }
+    public void play(String start, String end){
+        if start = end{
+            exit and print ladder
+        }
+        if start length != end length{
+            No Ladder was Found
+        } elif start in row and end in row{
+            No Ladder was found
+        }else{
+            oneAway(start, true);
+            oneAway(end, true);
+            compare oneAway end and oneAway start and make sure no words overlap. if words overlap, ladder is complete;
+            for i in oneAwayend{
+                for j in oneAwaystart{
+                    play(oneAwaystart[j], oneAwayend[i]);
+                }
+            }
+        }
+    }
+    public boolean dif(String word, String dictWord){
+        int counter =0;
+        for i< word.length{
+            compare word[i] and dictWord[i];
+            if equal add 1 to counter variable
+        }
+        return counter==1;
+    }
