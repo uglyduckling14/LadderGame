@@ -10,27 +10,9 @@ public class LadderGame extends Queue {
 
         readDictionary(dictionaryFile);
     }
-    private int dif(String start, String end){
-        if(start.equals(end)){
-            return 0;
-        }
-        int counter = 0;
-//        System.out.println(start);
-//        System.out.println(end);
-        if(start.length()==end.length()) {
-            for (int i = 0; i < start.length(); i++) {
-                if(Character.toLowerCase(start.charAt(i)) != Character.toLowerCase(end.charAt(i))) {
-                    counter++;
-//                    System.out.print(Character.toLowerCase(start.charAt(i)));
-//                    System.out.print(Character.toLowerCase(end.charAt(i)));
-//                    System.out.println(start + " "+ end+ " "+ counter);
-                }
-            }
-            return counter;
-        }
-        return -1;
-    }
     public void play(String start, String end) {
+        int counter = 0;
+        WordInfo wordInfo = new WordInfo(end, counter);
         if(start.equals(end)){
             System.out.println(start+ " -> "+ end);
         }
@@ -38,9 +20,10 @@ public class LadderGame extends Queue {
             System.out.println(start+" -> "+ end+ ": No ladder was found");
         }
         Queue<String> partSolution = new Queue<>();
-        partSolution.enqueque(start);
+        partSolution.enqueque(end);
+        organized.get(start.length()-2).remove(start);
         String newWord = "";
-        while(!newWord.equals(start) && !newWord.equals(end)){
+        while(!partSolution.isEmpty() && !newWord.equals(start) && !newWord.equals(end)){
             char[] testWord = start.toCharArray();
             //ArrayList<String> oneAway = new ArrayList<>();
             outer: for(int i =0; i< start.length();i++){
@@ -51,9 +34,10 @@ public class LadderGame extends Queue {
                     if(!allWords.contains(String.valueOf(testWord))){
                         continue;
                     }
-                    System.out.println(testWord);
+                    //System.out.println(testWord);
                     allWords.remove(String.valueOf(testWord));
                     if(newWord.equals(end)){
+                        partSolution.enqueque(newWord);
                         break outer;
                     }
                 }

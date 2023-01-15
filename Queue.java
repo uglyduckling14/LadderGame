@@ -1,10 +1,11 @@
 public class Queue<E> {
-    Queue<E> queue = new Queue<>();
+    //Queue<E> queue = new Queue<>();
+    E value;
     public void enqueque(E value){
-        queue.
+
     }
     public E dequeue(){
-        return value;
+        return value ;
     }
     public boolean isEmpty(){
         return true;
