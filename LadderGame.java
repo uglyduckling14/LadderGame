@@ -11,39 +11,69 @@ public class LadderGame extends Queue {
         readDictionary(dictionaryFile);
     }
     public void play(String start, String end) {
-        int counter = 0;
-        WordInfo wordInfo = new WordInfo(end, counter);
         if(start.equals(end)){
             System.out.println(start+ " -> "+ end);
         }
         if(!allWords.contains(end) || !allWords.contains(start)){
-            System.out.println(start+" -> "+ end+ ": No ladder was found");
+            System.out.println(start+" -> "+ end);
         }
-        Queue<String> partSolution = new Queue<>();
-        partSolution.enqueque(end);
-        organized.get(start.length()-2).remove(start);
-        String newWord = "";
-        while(!partSolution.isEmpty() && !newWord.equals(start) && !newWord.equals(end)){
-            char[] testWord = start.toCharArray();
-            //ArrayList<String> oneAway = new ArrayList<>();
-            outer: for(int i =0; i< start.length();i++){
-                char original = testWord[i];
-                for(char c = 'a'; c<='z'; c++){
-                    testWord[i] = c;
-                    newWord = String.valueOf(testWord);
-                    if(!allWords.contains(String.valueOf(testWord))){
-                        continue;
-                    }
-                    //System.out.println(testWord);
-                    allWords.remove(String.valueOf(testWord));
-                    if(newWord.equals(end)){
-                        partSolution.enqueque(newWord);
-                        break outer;
-                    }
+        Queue<String> queue = new Queue<>();
+        WordInfo startWord = new WordInfo(start,0," ");
+        queue.enqueue(startWord.getWord());
+        queue.enqueue(end);
+        int counter = 0;
+        String current = " ";
+        loop:while(!queue.isEmpty() && !current.equals(end)){
+            current = queue.dequeue();
+            System.out.println(current);
+            System.out.println(oneAway(current,true).get(0));
+            for(String check:oneAway(current,true)){
+                System.out.println('x');
+                if(check.equals(end)){
+                    System.out.println(start+ " -> "+ end + " : "+ startWord.getMoves()+ " Moves [ "+
+                           startWord.getHistory() + " ] total enqueues " + counter);
+                    break loop;
                 }
-                testWord[i]=original;
+                int moves = startWord.getMoves()+1;
+                String history = startWord.getHistory() + " "+ startWord.getWord();
+                startWord = new WordInfo(start,moves,history);
+                System.out.println(startWord.getWord());
+                queue.enqueue(startWord.getWord());
+                counter++;
             }
         }
+        if(current.equals(end)){
+            System.out.println(start+ " -> "+ end + " : "+ startWord.getMoves()+ " Moves [ "+
+                    startWord.getHistory() + " ] total enqueues " + counter);
+        }else {
+            System.out.println(start + " -> " + end + " : No ladder was found");
+        }
+//        Queue<String> partSolution = new Queue<>();
+//        partSolution.enqueque(end);
+//        organized.get(start.length()-2).remove(start);
+//        String newWord = "";
+//        while(!partSolution.isEmpty() && !newWord.equals(start) && !newWord.equals(end)){
+//            char[] testWord = start.toCharArray();
+//            //ArrayList<String> oneAway = new ArrayList<>();
+//            outer: for(int i =0; i< start.length();i++){
+//                char original = testWord[i];
+//                for(char c = 'a'; c<='z'; c++){
+//                    testWord[i] = c;
+//                    newWord = String.valueOf(testWord);
+//                    if(!allWords.contains(String.valueOf(testWord))){
+//                        continue;
+//                    }
+//                    //System.out.println(testWord);
+//                    allWords.remove(String.valueOf(testWord));
+//                    if(newWord.equals(end)){
+//                        partSolution.enqueque(newWord);
+//                        break outer;
+//                    }
+//                }
+//                testWord[i]=original;
+//            }
+//        }
+
     }
 
     public ArrayList<String> oneAway(String word, boolean withRemoval) {
@@ -56,8 +86,10 @@ public class LadderGame extends Queue {
                 testWord[i] = c;
                 if(!allWords.contains(String.valueOf(testWord))){
                     continue;
+                }else{
+                    oneAway.add(String.valueOf((testWord)));
                 }
-                System.out.println(testWord);
+                //System.out.println(testWord);
                 if(withRemoval) {
                     allWords.remove(String.valueOf(testWord));
                 }

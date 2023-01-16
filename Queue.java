@@ -1,13 +1,40 @@
 public class Queue<E> {
-    //Queue<E> queue = new Queue<>();
-    E value;
-    public void enqueque(E value){
-
+    class Qnode{
+        E key;
+        Qnode next;
+        public Qnode(E key){
+            this.key = key;
+            this.next = null;
+        }
     }
-    public E dequeue(){
-        return value ;
+    Qnode begin;
+    Qnode end;
+    public Queue(){
+        this.begin = null;
+        this.end = null;
+    }
+    public void enqueue(E value){
+        Qnode current = new Qnode(value);
+        if(isEmpty()){
+            //System.out.println("s");
+            this.begin = current;
+            this.end = current;
+        }else{
+            this.end.next = current;
+            this.end = current;
+        }
+    }
+    public E dequeue(){//removes first returns last
+        if(this.begin==null){
+            return null;
+        }
+        Qnode current = this.begin;
+        this.begin = this.begin.next;
+        System.out.println(current.key);
+        return current.key;
     }
     public boolean isEmpty(){
-        return true;
+        return this.end == null;
     }
 }
+
