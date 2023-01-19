@@ -14,14 +14,14 @@ public class WordLadders {
 //        System.out.println();
 
         System.out.println("--- Word Ladders ---");
-        g.play("oops", "tots");
-        g.play("ride", "ands");
-        g.play("happily", "angrily");
-        g.play("slow", "fast");
-        g.play("stone", "money");
-        g.play("biff", "axis");
-        g.play("fungi", "among");
+//        g.play("oops", "tots");
+//        g.play("ride", "ands");
+//        g.play("happily", "angrily");
+//        g.play("slow", "fast");
+//        g.play("stone", "money");
+//        g.play("biff", "axis");
+//        g.play("fungi", "among");
         g.play("kiss", "woof");
-        g.play("aits","bits");
+//        g.play("aits","bits");
     }
 }
