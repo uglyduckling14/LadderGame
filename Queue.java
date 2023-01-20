@@ -21,6 +21,7 @@ public class Queue<E> {
             this.begin = current;
             return;
         }
+        //System.out.println(current.key);
         this.end.next = current;
         this.end = current;
     }
@@ -30,8 +31,17 @@ public class Queue<E> {
         }
         Qnode current = this.begin;
         this.begin = this.begin.next;
-        System.out.println(current.key);
+        //System.out.println(current.key);
         return current.key;
+    }
+    public int getSize(){
+        Qnode temp = this.begin;
+        int count = 0;
+        while(temp != null){
+            count++;
+            temp = temp.next;
+        }
+        return count;
     }
     public boolean isEmpty(){
         return this.begin == null;

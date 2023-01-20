@@ -12,60 +12,43 @@ public class LadderGame extends Queue {
     }
     public void play(String start, String end) {
         if(!allWords.contains(end) || !allWords.contains(start)){
-            System.out.println(start+" -> "+ end);
+            System.out.println(start + "->"+ end + ": No ladder was found");
+            return;
         }
         Queue<String> queue = new Queue<>();
-        WordInfo startWord = new WordInfo(start,1,start);
         queue.enqueue(start);
-        queue.enqueue(end);
-        int counter = 1;
-        int moves = 1;
-        String current = " ";
-        String history = start+ ", ";
-        loop:while(!queue.isEmpty() && !current.equals(end)){
-            //System.out.println("'x");
-            current = queue.dequeue();
-            history = history + current;
-            ArrayList<String> one = oneAway(current,true);
-            //System.out.println(one);
-            if(one.size()<1){
-                break loop;
-            }
-            for(String check:one){
-                //System.out.println('x');
-                if(check.equals(end)){
-                    //System.out.print('x');
-                    counter++;
-                    System.out.println(start+ " -> "+ end + " : "+ startWord.getMoves()+ " Moves ["+
-                           startWord.getHistory() +", "+ end+ "] total enqueues " + counter);
-                    return;
-                }
-                //System.out.print(check+" ");
-                WordInfo newWord = new WordInfo(check,moves,history);
-                history = history + check + ", ";
-                //System.out.println(check);
-                queue.enqueue(newWord.getWord());
-                counter++;
-                //check1 =;
-            }
-            //System.out.println(current);
-            //history = history + check1 + ", ";
-            moves = startWord.getMoves()+1;
-        }
-        if(current.equals(end)){
+        //ArrayList<String> words = new ArrayList<>();
+        String history="";
+        int counter = 0;
+        int enqueue = 1;
+        WordInfo wordinfo = new WordInfo(start,counter,history);
+        while(!queue.isEmpty()){
             counter++;
-            //System.out.println('x');
-            System.out.println(start+ " -> "+ current + " : "+ moves + " Moves ["+
-                    history+ end + "] total enqueues " + counter);
-        }else {
-            //System.out.println(history);
-            System.out.println(start + " -> " + end + " : No ladder was found");
+            enqueue++;
+            int size = queue.getSize();
+            //System.out.println(size);
+            for(int i = 0; i<size; i++) {
+                String testWord = queue.dequeue();
+                //history+=testWord;
+                ArrayList<String> oneDif = oneAway(testWord, true);
+                //System.out.println(oneDif.size());
+                for (String one : oneDif) {
+                    enqueue++;
+                    if (end.equals(one)) {
+                        history += one;
+                        System.out.println(start + "->" + end + " : " + counter + " Moves [" + history + "] total enqueues " + enqueue);
+                        return;
+                    }
+                    //System.out.println('d');
+                    queue.enqueue(one);
+                }
+            }
+
         }
-
+        System.out.println(start + "->"+ end + ": No ladder was found");
     }
-
     public ArrayList<String> oneAway(String word, boolean withRemoval) {
-        allWords.remove(word);
+        //allWords.remove(word);
         char[] testWord = word.toCharArray();
         ArrayList<String> oneAway = new ArrayList<>();
         for(int i =0; i< word.length();i++){
